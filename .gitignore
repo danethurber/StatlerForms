@@ -1,0 +1,57 @@
+*.py[co]
+*.db
+statler3/build
+statler3/static
+
+# Editor/IDE files
+*~
+*.iml
+*.ipr
+*.iws
+.idea/
+*.tmproj
+*.tmproject
+tmtags
+.*.sw[a-z]
+*.un~
+Session.vim
+.codeintel
+.project
+.pydevproject
+
+# Mac Files
+.DS_Store
+Icon?
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Ignore tags created by etags and ctags
+TAGS
+tags
+tags_sorted_by_file
+
+# Installer logs
+pip-log.txt
+*.log
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+#Translations
+*.mo
+
+local_settings.py
+
+.project
+
+# media stuff
+statler3/media/static
+statler3/media/clients
+statler3/media/admin-media
+statler3/media/*.jpg
