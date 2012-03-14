@@ -2,11 +2,11 @@ define([
     'jquery',
     'backbone',
 
-    'app/helpers',
+    'helpers',
 
-    'text!template/form.html',
-    'text!template/fieldset.html',
-    'text!template/field.html'
+    'text!sFormTemplate/form.html',
+    'text!sFormTemplate/fieldset.html',
+    'text!sFormTemplate/field.html'
 ], function(
     $,
     Backbone,
@@ -435,11 +435,16 @@ define([
         template : _.template( '<div class="fieldsets"></div>' ),
 
         tagName : 'div',
-        className : 'nested-form well'
+        className : 'nested-form well',
+
+        initialize: function(options) {
+            Form.prototype.initialize.call(this, options);
+        }
     });
 
     var NestedListForm = NestedForm.extend({
         template : _.template(
+            '<a class="close">×</a>' +
             '<div class="fieldsets">' +
             '</div>'
         )
@@ -714,6 +719,7 @@ define([
 
         events : {
             'click .add' : 'onAddClick',
+            'click .close' : 'onDeleteClick',
             'click .delete' : 'onDeleteClick'
         },
 
@@ -819,11 +825,11 @@ define([
             this.render();
         },
 
-        // remove: function() {
-        //     this.form.remove();
+        remove: function() {
+            this.form.remove();
 
-        //     Backbone.View.prototype.remove.call(this);
-        // },
+            Backbone.View.prototype.remove.call(this);
+        },
 
         validate: function() {
             return this.form.validate();
