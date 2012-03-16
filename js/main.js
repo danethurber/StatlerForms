@@ -7,7 +7,7 @@ require.config({
         backbone:           'libs/backbone/backbone-0.9.1-amd',
         text:               'libs/require/text',
         chosen:             'libs/jquery/chosen.jquery.min',
-        sForm:              'StatlerForms/view/statler-form',
+        sForm:              'StatlerForms/statler-form',
         sFormTemplate:      'StatlerForms/template' // path to the template files
     }
 });
@@ -25,6 +25,12 @@ require([], function(){
             if (arguments.length == 1) console.debug(arguments[0]);
             else console.log( Array.prototype.slice.call(arguments) );
         }
+    };
+
+    Array.prototype.remove = function(from, to) {
+        var rest = this.slice((to || from) + 1 || this.length);
+        this.length = from < 0 ? this.length + from : from;
+        return this.push.apply(this, rest);
     };
 
 });

@@ -47,23 +47,23 @@ define([
     };
     Helpers.getValidators = function(validator) {
         // check if it's a regex
-            if( _.isRegExp(validator) )
-                return Validators.regex({ regex: validator });
+        if( _.isRegExp(validator) )
+            return Validators.regex({ regex: validator });
 
-            // check against predefined validators
-            if( _.isString(validator) ) {
-                if( !Validators[validator] )
-                    throw new Error('Validator ' + validator + ' not found');
+        // check against predefined validators
+        if( _.isString(validator) ) {
+            if( !Validators[validator] )
+                throw new Error('Validator ' + validator + ' not found');
 
-                return Validators[validator]();
-            }
+            return Validators[validator]();
+        }
 
-            // take a function directly
-            if( _.isFunction(validator) )
-                return validator;
+        // take a function directly
+        if( _.isFunction(validator) )
+            return validator;
 
-            // nothing matches, throw error
-            throw new Error('Invalid validator: ' + validator);
+        // nothing matches, throw error
+        throw new Error('Invalid validator: ' + validator);
     };
 
     // -----------------------------------------
@@ -242,6 +242,11 @@ define([
                 else
                     $help.empty();
             }
+        },
+        remove: function() {
+            this.editor.remove();
+
+            Backbone.View.prototype.remove.call(this);
         }
     });
 
@@ -428,6 +433,15 @@ define([
                 return modelError;
 
             this.model.save();
+        },
+        remove: function() {
+            var fields = this.fields;
+
+            for (var key in fields) {
+                fields[key].remove();
+            }
+
+            Backbone.View.prototype.remove.call(this);
         }
     });
 
@@ -447,7 +461,12 @@ define([
             '<a class="close">×</a>' +
             '<div class="fieldsets">' +
             '</div>'
-        )
+        ),
+        initialize: function(options) {
+            Form.prototype.initialize.call(this, options);
+
+            this.$el.attr('data-cid', this.model.cid);
+        }
     });
 
     // -----------------------------------------
@@ -898,6 +917,17 @@ define([
             });
 
             return data;
+        },
+        removeItem : function(item) {
+            var self = this;
+            var formCid = $(item).parent().attr('data-cid');
+
+            _.each(this.subForms, function(form, index) {
+                if(form.model.cid === formCid) {
+                    form.remove();
+                    self.subForms.remove(index);
+                }
+            });
         }
     });
 
