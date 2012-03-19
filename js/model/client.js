@@ -1,4 +1,4 @@
-define(['jquery', 'backbone', 'model/email', 'model/website'], function($, Backbone, Email, Website){
+define(['jquery', 'backbone', 'model/email', 'model/website', 'model/address', 'model/account-manager'], function($, Backbone, Email, Website, Address, AccountManager){
 
     var ClientStatusOptions = [
         {
@@ -15,22 +15,11 @@ define(['jquery', 'backbone', 'model/email', 'model/website'], function($, Backb
         }
     ];
 
-    var RadioOptions = [
-        {
-            val: 'yes',
-            label: 'Yes'
-        },
-        {
-            val: 'no',
-            label: 'No'
-        }
-    ];
-
     var Client = Backbone.Model.extend({
         urlRoot : 'path/to/client/model',
 
         schema : {
-            name : { validators: ['required'] },
+            name : { validators: ['required'], title : 'Company Name' },
             slug : { validators: ['required', 'slug'] },
             twitter : { type: 'List' },
             status : {
@@ -38,13 +27,16 @@ define(['jquery', 'backbone', 'model/email', 'model/website'], function($, Backb
                 options: ClientStatusOptions,
                 editorClass : 'chosen'
             },
-            yesNo : { type: 'Radio', options : RadioOptions },
-            alias : { type: 'List' },
-            website: { type: 'ObjectList', listType: 'NestedModel', model: Website }
+            accountManager : { type: 'ObjectList', listType: 'NestedModel', model: AccountManager, title : 'Account Manager(s)' },
+            // yesNo : { type: 'Radio', options : RadioOptions },
+            alias : { type: 'List', title : 'Alias(es)' },
+            website: { type: 'ObjectList', listType: 'NestedModel', model: Website, title : 'Website(s)' },
+            address : { type: 'ObjectList', listType: 'NestedModel', model: Address, title : 'Address(es)' },
+            affiliateCode : {},
+            taxId : {}
         },
         defaults : {
-            status : 'pending',
-            yesNo : 'yes'
+            status : 'pending'
         }
     });
 

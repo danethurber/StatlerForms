@@ -30,6 +30,13 @@
                     <ul class="nav">
                         <li class="divider-vertical"></li>
                         <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Forms
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="">Client</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->
@@ -52,55 +59,28 @@
     </div>
 
     <script type="text/javascript">
-    define([
-        'jquery',
-        'backbone',
-
-        // MODELS
-        'model/client',
-        'model/email',
-        'model/website',
-
-        'sForm',
-
-        // PLUGINS
-        'chosen'
-    ], function(
-        $,
-        Backbone,
-
-        // MODELS
-        Client,
-        Email,
-        Website,
-
-        StatlerForm
-    ){
+    define([ 'jquery', 'backbone', 'model/client', 'model/email', 'model/website', 'StatlerForm', 'chosen', 'libs/bootstrap/bootstrap-dropdown' ],
+    function( $, Backbone, Client, Email, Website, StatlerForm ){
         this.client = new Client({
-            name : 'Scott Jensen Design',
-            alias : ['scooter'],
-            website : [
-                {
-                    type : 'Corporate',
-                    url : 'http://google.com'
-                },
-                {
-                    type : 'Personal',
-                    url : 'http://scottjensendesign.com'
-                }
-            ]
+            name : 'Asdf'
         });
+            // client.url = 'client/url/changed';
+            // client.fetch();
 
         this.clientForm = new StatlerForm({
             model: this.client,
             fieldsets: [
                 {
                     legend: 'Client Information',
-                    fields: ['name', 'slug', 'twitter', 'status', 'alias', 'yesNo']
+                    fields: ['name', 'slug', 'status', 'alias']
+                },
+                {
+                    legend: 'Contact Information',
+                    fields: ['accountManager', 'address', 'twitter', 'website']
                 },
                 {
                     legend: 'Additional Information',
-                    fields: ['website']
+                    fields: ['affiliateCode', 'taxId']
                 }
             ]
         });
